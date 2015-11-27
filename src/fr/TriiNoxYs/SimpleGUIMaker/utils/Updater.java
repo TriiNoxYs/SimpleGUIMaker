@@ -75,7 +75,7 @@ public class Updater{
                             p.sendMessage("§6§l" + name + " §8§l>>> §a§lNew version available !");
                             p.sendMessage("§6§l" + name + " §8§l>>> §a§lCurrent: §c" + version);
                             p.sendMessage("§6§l" + name + " §8§l>>> §a§lUpdate:  §6" + serverReturn);
-                            p.sendMessage("§6§l" + name + " §8§l>>> §a§lType §6/icupdate§a§l to update !");
+                            p.sendMessage("§6§l" + name + " §8§l>>> §a§lType §6/" + name.toLowerCase() + " update§a§l to update !");
                             p.sendMessage("");
                         }
                     } 

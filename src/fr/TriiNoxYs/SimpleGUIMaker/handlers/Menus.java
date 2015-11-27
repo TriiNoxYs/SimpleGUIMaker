@@ -15,14 +15,6 @@ public class Menus{
     
     public Menus(Main instance){
         plugin = instance;
-        System.out.println("PUTAIN ICI ICI CIC ICICICIIICICICIICICIICIICICCICICICICI");
-        System.out.println("PUTAIN ICI ICI CIC ICICICIIICICICIICICIICIICICCICICICICI");
-        System.out.println("PUTAIN ICI ICI CIC ICICICIIICICICIICICIICIICICCICICICICI");
-        System.out.println("PUTAIN ICI ICI CIC ICICICIIICICICIICICIICIICICCICICICICI");
-        System.out.println("PUTAIN ICI ICI CIC ICICICIIICICICIICICIICIICICCICICICICI");
-        System.out.println("PUTAIN ICI ICI CIC ICICICIIICICICIICICIICIICICCICICICICI");
-        System.out.println("PUTAIN ICI ICI CIC ICICICIIICICICIICICIICIICICCICICICICI");
-        System.out.println("PUTAIN ICI ICI CIC ICICICIIICICICIICICIICIICICCICICICICI");
     }
     
     public static HashMap<Player, String> creatingMenu = new HashMap<Player, String>();
