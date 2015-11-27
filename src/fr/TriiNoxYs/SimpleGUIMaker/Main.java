@@ -20,7 +20,7 @@ public class Main extends JavaPlugin{
         plugin = this;
         
         updater = new Updater(this);
-        Updater.checkUpdate(true);
+        //Updater.checkUpdate(true);
         
         getCommand("simpleguimaker").setExecutor(new SgmCmd(this));
         
