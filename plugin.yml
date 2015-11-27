@@ -1,8 +1,8 @@
 name: SimpleGUIMaker
 author: TriiNoxYs
-version: 1.0.1
+version: 1.0.0
 main: fr.TriiNoxYs.SimpleGUIMaker.Main
 commands:
   simpleguimaker:
-    description: Main command
+    description: Can be shorten in SGM
     aliases: [sgm]

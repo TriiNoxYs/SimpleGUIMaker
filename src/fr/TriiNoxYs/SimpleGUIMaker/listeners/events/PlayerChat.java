@@ -26,11 +26,11 @@ public class PlayerChat implements Listener{
             if(e.getMessage().equalsIgnoreCase("Yes")){
                 p.sendMessage("§aOk, the server will reload.");
                 Bukkit.getServer().reload();
-                asking.put( p, false);
+                asking.put(p, false);
             }
             else if(e.getMessage().equalsIgnoreCase("No")){
                 p.sendMessage("§aThe new version of the plugin will be used on next restart.");
-                asking.put( p, false);
+                asking.put(p, false);
             }
             else p.sendMessage("§aType §6Yes §aor §cNo§a.");
         }
