@@ -16,9 +16,12 @@ public class PlayerChat implements Listener{
     public static HashMap<Player, Boolean> asking = new HashMap<Player, Boolean>();
     
     @EventHandler
-    public void onTalk(AsyncPlayerChatEvent e){
+    public void onPlayerChat(AsyncPlayerChatEvent e){
         Player p = e.getPlayer();
-        if(asking.get(p) == true){
+        String msg = e.getMessage();
+        String[] args = msg.split(" ");
+        
+        if(asking.containsKey(p) && asking.get(p) == true){
             e.setCancelled(true);
             if(e.getMessage().equalsIgnoreCase("Yes")){
                 p.sendMessage("§aOk, the server will reload.");
@@ -31,13 +34,6 @@ public class PlayerChat implements Listener{
             }
             else p.sendMessage("§aType §6Yes §aor §cNo§a.");
         }
-    }
-    
-    @EventHandler
-    public void onPlayerChat(AsyncPlayerChatEvent e){
-        Player p = e.getPlayer();
-        String msg = e.getMessage();
-        String[] args = msg.split(" ");
         
         if(Menus.getStep(p) != "no" && Menus.creatingMenu.containsKey(p)){
             e.setCancelled(true);
