@@ -131,7 +131,7 @@ public class Updater{
                 if(sender instanceof ConsoleCommandSender || sender.hasPermission(name.toLowerCase() + ".update") || sender.isOp()){
                     sender.sendMessage(" \n§a§l" + name + " is already updated.");
                     sender.sendMessage("§a§lCurrent version:§6 " + version);
-                    sender.sendMessage("§a§lType §6/icupdate -force§a to update !\n ");
+                    sender.sendMessage("§a§lType §6/" + name.toLowerCase() + " update -force§a to force update !\n ");
                 }
             }
             else{
