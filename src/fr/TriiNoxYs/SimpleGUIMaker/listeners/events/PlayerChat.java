@@ -1,22 +1,24 @@
 package fr.TriiNoxYs.SimpleGUIMaker.listeners.events;
 
+
 import java.util.HashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerChatEvent;
 import fr.TriiNoxYs.SimpleGUIMaker.handlers.Menus;
 import fr.TriiNoxYs.SimpleGUIMaker.utils.ChatUtils;
 import fr.TriiNoxYs.SimpleGUIMaker.utils.MathUtils;
 
 
+@SuppressWarnings ("deprecation")
 public class PlayerChat implements Listener{
     
     public static HashMap<Player, Boolean> asking = new HashMap<Player, Boolean>();
     
     @EventHandler
-    public void onPlayerChat(AsyncPlayerChatEvent e){
+    public void onPlayerChat(PlayerChatEvent e){
         Player p = e.getPlayer();
         String msg = e.getMessage();
         String[] args = msg.split(" ");
