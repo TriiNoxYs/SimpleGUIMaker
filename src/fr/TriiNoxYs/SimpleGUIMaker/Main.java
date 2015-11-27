@@ -3,6 +3,7 @@ package fr.TriiNoxYs.SimpleGUIMaker;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import fr.TriiNoxYs.SimpleGUIMaker.handlers.InventoriesFile;
+import fr.TriiNoxYs.SimpleGUIMaker.handlers.Menus;
 import fr.TriiNoxYs.SimpleGUIMaker.listeners.commands.SgmCmd;
 import fr.TriiNoxYs.SimpleGUIMaker.listeners.events.PlayerChat;
 import fr.TriiNoxYs.SimpleGUIMaker.listeners.events.PlayerInv;
@@ -19,8 +20,10 @@ public class Main extends JavaPlugin{
     public void onEnable(){
         plugin = this;
         
-        updater = new Updater(this);
+        //updater = new Updater(this);
         //Updater.checkUpdate(true);
+        
+        new Menus(this);
         
         getCommand("simpleguimaker").setExecutor(new SgmCmd(this));
         
@@ -30,6 +33,7 @@ public class Main extends JavaPlugin{
         
         if (!getDataFolder().exists())
             getDataFolder().mkdir();
+        
         inventories = new InventoriesFile(this);
     }
     

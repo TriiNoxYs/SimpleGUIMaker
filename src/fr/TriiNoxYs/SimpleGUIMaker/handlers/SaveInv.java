@@ -1,5 +1,6 @@
 package fr.TriiNoxYs.SimpleGUIMaker.handlers;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import fr.TriiNoxYs.SimpleGUIMaker.Main;
@@ -9,6 +10,8 @@ import fr.TriiNoxYs.SimpleGUIMaker.utils.TitleUtils;
 public class SaveInv{
 
     public SaveInv(Main main, Player p, String name, Inventory inv){
+        if(main == null)Bukkit.broadcastMessage("NULL");
+        
         main.inventories.data.set(name.replace(" ", "_").replace("&", "§") + ".items", ItemSerialization.saveInventory(inv));
         main.inventories.data.set(name.replace(" ", "_") + ".lines", inv.getSize()/9);
         main.inventories.save();
