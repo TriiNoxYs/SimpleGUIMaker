@@ -15,13 +15,10 @@ public class Main extends JavaPlugin{
     public static Main plugin;
     
     public InventoriesFile inventories;
-    public Updater updater;
+    public Updater updater = new Updater(this);;
     
     public void onEnable(){
         plugin = this;
-        
-        //updater = new Updater(this);
-        //Updater.checkUpdate(true);
         
         new Menus(this);
         
@@ -35,6 +32,8 @@ public class Main extends JavaPlugin{
             getDataFolder().mkdir();
         
         inventories = new InventoriesFile(this);
+        
+        Updater.checkUpdate(true);
     }
     
     public void onDisable(){ 

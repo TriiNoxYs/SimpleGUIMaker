@@ -1,5 +1,7 @@
 package fr.TriiNoxYs.SimpleGUIMaker.listeners.events;
 
+import java.util.HashMap;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,6 +12,26 @@ import fr.TriiNoxYs.SimpleGUIMaker.utils.MathUtils;
 
 
 public class PlayerChat implements Listener{
+    
+    public static HashMap<Player, Boolean> asking = new HashMap<Player, Boolean>();
+    
+    @EventHandler
+    public void onTalk(AsyncPlayerChatEvent e){
+        Player p = e.getPlayer();
+        if(asking.get(p) == true){
+            e.setCancelled(true);
+            if(e.getMessage().equalsIgnoreCase("Yes")){
+                p.sendMessage("§aOk, the server will reload.");
+                Bukkit.getServer().reload();
+                asking.put( p, false);
+            }
+            else if(e.getMessage().equalsIgnoreCase("No")){
+                p.sendMessage("§aThe new version of the plugin will be used on next restart.");
+                asking.put( p, false);
+            }
+            else p.sendMessage("§aType §6Yes §aor §cNo§a.");
+        }
+    }
     
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent e){

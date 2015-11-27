@@ -17,9 +17,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import fr.TriiNoxYs.SimpleGUIMaker.Main;
+import fr.TriiNoxYs.SimpleGUIMaker.listeners.events.PlayerChat;
 
 
 public class Updater{
+    
+    /*
+     * @author TriiNoxYs
+     * Please do not copy this class.
+     */
     
     private static Main plugin;
     
@@ -27,15 +33,15 @@ public class Updater{
         plugin = instance;
     }
     
-    private static String name ;
-    private static String check_adress ;
+    private static String name;
+    private static String check_adress;
     private static String download_adress;
     private static String update_path;
     
     public static String checkUpdate(boolean showInfos){
         name = plugin.getDescription().getName();
-        check_adress = "http://triinoxys.altervista.org/Uploads/Files/Plugins/" + name + "/check_update.php";
-        download_adress = "http://triinoxys.altervista.org/Uploads/Files/Plugins/" + name + "/" + name + ".jar";
+        check_adress = "http://ftp.triinoxys.altervista.org/Uploads/Files/Plugins/" + name + "/check_update.php";
+        download_adress = "http://ftp.triinoxys.altervista.org/Uploads/Files/Plugins/" + name + "/" + name + ".jar";
         update_path = "plugins"+ File.separator + name + ".jar";
         
         
@@ -69,9 +75,8 @@ public class Updater{
                             p.sendMessage("§6§l" + name + " §8§l>>> §a§lNew version available !");
                             p.sendMessage("§6§l" + name + " §8§l>>> §a§lCurrent: §c" + version);
                             p.sendMessage("§6§l" + name + " §8§l>>> §a§lUpdate:  §6" + serverReturn);
-                            p.sendMessage("§6§l" + name + " §8§l>>> §a§lType §6/" + name.toLowerCase() + " update§a§l to update !");
+                            p.sendMessage("§6§l" + name + " §8§l>>> §a§lType §6/icupdate§a§l to update !");
                             p.sendMessage("");
-                            p.sendMessage(compareVersions(version, serverReturn));
                         }
                     } 
                 }
@@ -82,7 +87,7 @@ public class Updater{
     }
     
     
-    public void download(CommandSender sender){
+    public void download(CommandSender sender, String reload){
         OutputStream out = null;
         URLConnection conn = null;
         InputStream in = null;
@@ -107,8 +112,10 @@ public class Updater{
             try{
                 if (in != null) in.close();
                 if (out != null) out.close();
-                Bukkit.getServer().reload();
                 sender.sendMessage("§6§l" + name + "§a has been updated !");
+                if(reload == "true") Bukkit.getServer().reload();
+                else if(reload == "false") sender.sendMessage("§aNow you need to reload/restart your server !");
+                else askReload(sender);
             }catch(IOException ioe){
                 ioe.printStackTrace();
             }
@@ -120,15 +127,23 @@ public class Updater{
         String version = plugin.getDescription().getVersion();
         
         if(!serverReturn.equals("failed")){
-            if((compareVersions(version, serverReturn).equals("same") || compareVersions(version, serverReturn).equals("current")) && ((args.length < 2) || (!args[1].equalsIgnoreCase("-force")))){
+            if((compareVersions(version, serverReturn).equals("same") || compareVersions(version, serverReturn).equals("current")) && ((args.length < 1) || (!args[0].equalsIgnoreCase("-force")))){
                 if(sender instanceof ConsoleCommandSender || sender.hasPermission(name.toLowerCase() + ".update") || sender.isOp()){
                     sender.sendMessage(" \n§a§l" + name + " is already updated.");
                     sender.sendMessage("§a§lCurrent version:§6 " + version);
-                    sender.sendMessage("§a§lType §6/" + name.toLowerCase() + " update -force§a to update !\n ");
+                    sender.sendMessage("§a§lType §6/icupdate -force§a to update !\n ");
                 }
             }
             else{
-                download(sender);
+                if(args.length >= 2){
+                    if(args[1].equalsIgnoreCase("-y")){
+                        download(sender, "true");
+                    }
+                    else if(args[1].equalsIgnoreCase("-n")){
+                        download(sender, "false");
+                    }
+                }
+                else download(sender, "ask");
             }
         }
         else sender.sendMessage("§c§lThe Updater cannot contact the update server.");
@@ -145,6 +160,15 @@ public class Updater{
             else if(Integer.valueOf(updateSplits[i]) < Integer.valueOf(currentSplits[i])) return "current";
         }
         return "same";
+    }
+    
+    private void askReload(CommandSender sender){
+        if(sender instanceof Player){
+            sender.sendMessage("§aDo you want to reload you server now? If no, the new version will be used on next restart.");
+            sender.sendMessage("§aType §6Yes §aor §cNo§a.");
+            PlayerChat.asking.put((Player) sender, true);
+        }
+        else sender.sendMessage("§aNow you need to reload/restart your server !");
     }
     
 }
