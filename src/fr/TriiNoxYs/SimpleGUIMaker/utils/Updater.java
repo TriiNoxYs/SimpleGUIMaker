@@ -12,6 +12,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Arrays;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -68,7 +69,7 @@ public class Updater{
         
         if(showInfos){
             if(!serverReturn.equals("failed")){
-                if(compareVersions(version, serverReturn) != "same" && compareVersions(version, serverReturn) != "current"){
+                if(needUpdate(version, serverReturn)){
                     for(Player p : Bukkit.getOnlinePlayers()){
                         if(p.hasPermission(name.toLowerCase() + ".update") || p.isOp()){
                             p.sendMessage("");
@@ -127,39 +128,40 @@ public class Updater{
         String version = plugin.getDescription().getVersion();
         
         if(!serverReturn.equals("failed")){
-            if((compareVersions(version, serverReturn).equals("same") || compareVersions(version, serverReturn).equals("current")) && ((args.length < 1) || (!args[0].equalsIgnoreCase("-force")))){
-                if(sender instanceof ConsoleCommandSender || sender.hasPermission(name.toLowerCase() + ".update") || sender.isOp()){
-                    sender.sendMessage(" \n§a§l" + name + " is already updated.");
-                    sender.sendMessage("§a§lCurrent version:§6 " + version);
-                    sender.sendMessage("§a§lType §6/" + name.toLowerCase() + " update -force§a to force update !\n ");
-                }
+            if(needUpdate(version, serverReturn)){
+                if(Arrays.asList(args).contains("-y")) download(sender, "true");
+                else if(Arrays.asList(args).contains("-n")) download(sender, "false");
+                else download(sender, "ask");
             }
             else{
-                if(args.length >= 2){
-                    if(args[1].equalsIgnoreCase("-y")){
-                        download(sender, "true");
-                    }
-                    else if(args[1].equalsIgnoreCase("-n")){
-                        download(sender, "false");
-                    }
+                if(Arrays.asList(args).contains("-force")){
+                	if(Arrays.asList(args).contains("-y")) download(sender, "true");
+                	else if(Arrays.asList(args).contains("-n")) download(sender, "false");
+                	else download(sender, "ask");
                 }
-                else download(sender, "ask");
+                else{
+                    if(sender instanceof ConsoleCommandSender || sender.hasPermission(name.toLowerCase() + ".update") || sender.isOp()){
+                        sender.sendMessage(" \n§a§l" + name + " is already updated.");
+                        sender.sendMessage("§a§lCurrent version:§6 " + version);
+                        sender.sendMessage("§a§lType §6/" + name.toLowerCase() + " update -force§a to force update !\n ");
+                    }
+                    else sender.sendMessage("§cYou don't have permission to do that.");
+                }
             }
         }
         else sender.sendMessage("§c§lThe Updater cannot contact the update server.");
-        
     }
     
-    private static String compareVersions(String currVer, String upVer){
+    private static boolean needUpdate(String currVer, String upVer){
         String[] currentSplits = currVer.split("\\.");
         String[] updateSplits = upVer.split("\\.");
         int count = currentSplits.length;
         
         for(int i = 0; i < count; i++){
-            if(Integer.valueOf(updateSplits[i]) > Integer.valueOf(currentSplits[i])) return "update";
-            else if(Integer.valueOf(updateSplits[i]) < Integer.valueOf(currentSplits[i])) return "current";
+            if(Integer.valueOf(updateSplits[i]) > Integer.valueOf(currentSplits[i])) return true;
+            else if(Integer.valueOf(updateSplits[i]) < Integer.valueOf(currentSplits[i])) return false;
         }
-        return "same";
+        return false;
     }
     
     private void askReload(CommandSender sender){
