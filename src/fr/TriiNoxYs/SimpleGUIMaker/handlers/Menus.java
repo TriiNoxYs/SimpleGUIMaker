@@ -55,6 +55,9 @@ public class Menus{
         else if(step == "editing items"){
             p.openInventory(invs.get(p));
         }
+        else if(step == "naming item"){
+        	
+        }
     }
     
     public static String getStep(Player p){

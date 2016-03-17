@@ -33,7 +33,9 @@ public class PlayerInv implements Listener{
                     if(item != null){
                         p.closeInventory();
                         Menus.item.put(p, item);
-                        Menus.itemSlot.put(p, getSlot(Menus.invs.get(p), item));
+                        //Menus.itemSlot.put(p, getSlot(Menus.invs.get(p), item));
+                        Menus.itemSlot.put(p, e.getRawSlot());
+                        Bukkit.broadcastMessage(String.valueOf(e.getRawSlot()));
                         ChatUtils.sendMsg(p, "§6§lPlease enter the name of this item.");
                         Menus.setStep(p, "naming item");
                     }

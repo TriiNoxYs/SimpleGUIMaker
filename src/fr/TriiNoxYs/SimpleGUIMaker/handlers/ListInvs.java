@@ -8,12 +8,12 @@ import fr.TriiNoxYs.SimpleGUIMaker.Main;
 
 public class ListInvs{
 
-    public ListInvs(Main main, Player player) {
+    public ListInvs(Main main, Player player){
     	Set<String> inventories = main.inventories.data.getKeys(false);
     	player.sendMessage("§7Saved inventories:");
     	ArrayList<String> invs = new ArrayList<String>();
     	for (String inv : inventories)
-    		if (!inv.contains("."))
+    		if(!inv.contains("."))
     			invs.add(inv);
     	player.sendMessage("§a" + invs.toString());
     }

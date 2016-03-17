@@ -41,7 +41,8 @@ public class PlayerChat implements Listener{
             e.setCancelled(true);
             
             if(Menus.getStep(p) == "naming item"){
-                Menus.item.get(p).getItemMeta().setDisplayName(msg);
+            	Menus.item.get(p).getItemMeta().setDisplayName(msg);
+                //Bukkit.broadcastMessage(Menus.item.get(p).getItemMeta().getDisplayName());
                 Menus.invs.get(p).setItem(Menus.itemSlot.get(p), Menus.item.get(p));
                 p.sendMessage("§6§lItem renamed.");
                 Menus.setStep(p, "editing items");
