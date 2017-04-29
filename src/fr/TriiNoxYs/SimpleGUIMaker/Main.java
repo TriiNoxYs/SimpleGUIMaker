@@ -1,6 +1,3 @@
-//Test uBugTrack
-// TEST WEBHOOOK DISCORD
-
 package fr.TriiNoxYs.SimpleGUIMaker;
 
 import org.bukkit.Bukkit;
